@@ -1,0 +1,75 @@
+.red_text
+{
+	color:red;
+	text-decoration:none;
+}
+.myDataTable
+{
+    border-left:#a0a0a0 1px solid;
+    background-color:#FFFFFF;    /* TABLE CONTENT BACKGROUND COLOR */
+}
+
+/*To use the alternate row style, add class=" alternaterow"*/
+.myDataTable tr.alternaterow
+{
+    background-color:#f2fbfd;    /* TABLE ALTERNATE ROW COLOR */
+}
+
+
+
+.myDataTable td
+{
+	
+ 	border-right:#a0a0a0 1px solid;
+ 	border-bottom:#a0a0a0 1px solid;
+ 	padding: 3px;
+ 	font-family:Verdana, Arial, Helvetica, sans-serif;
+ 	font-size:11px;
+ 	color:#000000;    /* TABLE CONTENT FONT COLOR */
+}
+
+.myDataTable td.borderlessTextInput
+{
+	border: 1px;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#1A1A1A;
+}
+
+.myDataTable a:link
+{
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	color:#3057a0;  /* LINKS FONT COLOR */
+	text-decoration:underline;	
+}
+
+.myDataTable a:hover
+{
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:10px;
+	color:#000000;  /* LINKS HOVER FONT COLOR */
+	text-decoration:none;		
+}
+
+.myDataTable a:visited
+{
+	color:#3057a0;  /* VISITED LINKS HOVER FONT COLOR --> SAME AS NORMAL LINKS */
+}
+
+.valid_text
+{
+	color:green;
+	font-size:11px; 
+	font-family:Arial, Helvetica, sans-serif;
+	font-style:italic;
+}
+
+.invalid_text
+{
+	color:red;
+	font-size:11px; 
+	font-family:Arial, Helvetica, sans-serif;
+	font-style:italic;
+}
+

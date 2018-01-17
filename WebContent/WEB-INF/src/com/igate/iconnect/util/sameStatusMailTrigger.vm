@@ -1,0 +1,129 @@
+<html>
+<head>
+<style>
+.createTable{
+	color:#34A0D3;
+	border:#a0a0a0 1px solid;
+ 	
+}
+.containerBlock1
+{
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:15px;
+	color:black;
+	font-weight:bold;
+	line-height:30px;
+	background:#a9e8fc;
+	display:block;
+}
+.creationScreenAlternateTR{
+	background:#E6F5FA;
+}
+.label
+{
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:13px;
+	color:#1A1A1A;
+	font-weight:bold;
+	width:25%;
+	text-align:right;
+}
+.val
+{
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	color:#1A1A1A;
+}
+</style>
+</head>
+<body>
+<h4>Hi ${helpDesk.ASSIGNED_TO},</h4>
+<p class = "val">Below is the summary of the ticket. Please login to <a href="https://lhiconnect.igate.com/">https://lhiconnect.igate.com/</a> for more details of the ticket.</p>
+<table border="0" cellspacing="3" cellpadding="3" width="70%" align = "center" class = "createTable">
+		<tr class="containerBlock1">
+			<td colspan="2">IConnect Ticket #(${helpDesk.TICKET_ID})</td>
+		</tr>
+		<tr>
+			<td class="label">
+				Ticket #
+			</td>	
+			<td align="left" class = "val">
+			 	${helpDesk.TICKET_ID}
+			</td>	 
+		</tr>
+		<tr class="creationScreenAlternateTR">
+			<td class="label">
+				Function
+			</td>	
+			<td align="left"  class = "val">
+			 	${helpDesk.FUNCTION}
+			</td>	 
+		</tr>
+		<tr>
+			<td class="label">
+				Description
+			</td>	
+			<td align="left"  class = "val">
+			 	${helpDesk.DESCRIPTION}
+			</td>	 
+		</tr>
+		<tr class="creationScreenAlternateTR">
+			<td class="label">
+				Creation Date
+			</td>	
+			<td align="left"  class = "val">
+			 	${helpDesk.CREATED_DATE}
+			</td>	 
+		</tr>
+		<tr>
+			<td class="label">
+				Status
+			</td>	
+			<td align="left"  class = "val">
+			 	${helpDesk.STATUS}
+			</td>	 
+		</tr>
+		<tr class="creationScreenAlternateTR">
+			<td class="label">
+				Priority
+			</td>	
+			<td align="left"  class = "val">
+			 	${helpDesk.PRIORITY}
+			</td>	 
+		</tr>
+		<tr>
+			<td class="label">
+				Requestor Name 
+			</td>	
+			<td align="left"  class = "val">
+			 	${helpDesk.CREATED_BY}
+			</td>	 
+		</tr>
+		<tr class="creationScreenAlternateTR">
+			<td class="label">
+				Assigned To
+			</td>	
+			<td align="left"  class = "val">
+			 	${helpDesk.ASSIGNED_TO}
+			</td>	 
+		</tr>
+		<tr>
+			<td class="label">
+				Requestor Project 
+			</td>	
+			<td align="left"  class = "val">
+			 	${helpDesk.PROJECT}
+			</td>	 
+		</tr>	
+		
+</table>
+</br>
+</br>
+<p>&nbsp;</p>
+</br>
+<img src="cid:logo"/>
+<p class = "val">Contact #: 1234 <BR />Email    :<a href="mailto:LH.Helpdesk@igate.com">IConnect Team</a></p>
+<p class = "val">This is an auto generated e-mail. Please do not reply.</p>
+</body>
+
+</html>

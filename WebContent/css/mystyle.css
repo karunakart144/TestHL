@@ -1,0 +1,96 @@
+@charset "utf-8";
+/* CSS Document */
+
+html, body
+{
+	width: 100%;
+	height: 100%;
+	
+	margin: 0px;
+	padding: 0px;
+	
+	overflow: auto;
+	
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 11px;
+	color: #333333;
+	text-decoration: none;
+	font-weight: normal;
+}
+
+#container
+{
+	width: 100%;
+	height: 100%;
+	
+	padding: 0px;
+	margin: 0px;
+}
+
+#left
+{
+	width: 100%;
+	background-color: 	#FFFFFF;
+	float: left;
+	clear: both;
+	padding-top: 30px;
+	overflow: auto;
+}
+
+#right
+{
+	width: 100%;
+	float: right;
+}
+
+.mytable
+{
+  background-color: #FFFFFF;
+}
+
+.mytable#head
+{
+	width: 100px;
+	float: left;
+}
+
+.mytable#data
+{
+	width: 100%;  
+}
+
+.mytable tr.alternaterow
+{
+  background-color: #effafd;
+}
+
+.mytable th
+{
+	background: #92d4e9  bottom repeat-x;
+	padding: 5px;
+	color: #333333;
+}
+
+.mytable td
+{
+	vertical-align: middle;
+}
+
+input,  select, file
+{
+	padding: 1px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 11px;
+	
+}
+
+.total_txt
+{
+	font-weight: bold;
+}
+
+.red_txt
+{
+	font-weight: normal;
+	color: #FF0000;
+}

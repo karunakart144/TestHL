@@ -1,0 +1,181 @@
+@charset "utf-8";
+/* CSS Document */
+
+body
+{
+	margin: 0px;
+	padding: 0px;
+
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+}
+
+.outer
+{
+	height: 100%;
+	width: 100%;
+}
+
+.links
+{
+	border: none;
+}
+
+.inner
+{
+	background: url(../images/bottom.jpg) no-repeat;
+	background-position: bottom center;
+	height: 60%;
+	width: 100%;
+	
+	text-align: center;
+	vertical-align: middle;
+
+	padding-bottom: 25px;
+}
+
+.outer_kb
+{
+	height: 100%;
+	width: 100%;
+}
+
+.inner_kb
+{
+	background: url(../images/bottom_kb.jpg) no-repeat;
+	background-position: bottom center;
+	height: 100%;
+	width: 100%;
+	
+	text-align: center;
+	vertical-align: middle;
+	
+	padding-bottom: 25px;
+}
+
+.outer_cont
+{
+	height: 100%;
+	width: 100%;
+}
+
+.inner_cont
+{
+	background: url(../images/bottom_cont.jpg) no-repeat;
+	background-position: bottom center;
+	height: 100%;
+	width: 100%;
+	
+	padding-bottom: 25px;
+}
+
+.head_link
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	color: #333333;
+	font-weight: bold;
+}
+
+a.head_link:hover
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	text-decoration: underline;
+	color: #df8b00;
+	font-weight: bold;
+}
+
+.txt
+{
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 11px;
+	color: #787878;
+}
+
+.sub_head_bg
+{
+	background: url(../images/no_flicker.jpg) repeat-x;
+	padding: 5px;
+	margin: 0px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 13px;
+	font-weight: bold;
+}
+.sub_tab_bg
+{
+	background-color: #FFCC99;
+	padding: 12px;
+}
+.my_sub_tab
+{
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 11px;
+	text-decoration: none;
+}
+
+.my_sub_tab_head
+{
+	background-color: #ECE5B6;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #000000;
+}
+
+.my_sub_tab_data
+{
+	background-color: #FFFFFF;
+	color: #787878;
+}
+
+.rightside
+{
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	color: #000000;
+	padding: 7px;
+}
+
+.accor_head
+{
+	background:#CCA37A;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #FFFFFF;
+	display:block;
+	padding: 5px;
+	text-decoration: none;
+}
+
+h2
+{
+	margin: 2px;
+	padding: 0px;
+	border: #d3d3d3 solid 1px;
+}
+.accor_head_search
+
+{
+
+		background:#ffebbf;	
+
+        font-family: Verdana, Geneva, sans-serif;
+
+        font-size: 12px;
+
+        font-weight: bold;
+
+        color: #FFFFFF;
+
+        display:block;
+
+        padding: 5px;
+
+        text-decoration: none;
+
+}
+
+

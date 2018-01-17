@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebSecurityValidatorConfig>
+	<!-- Different configuration files that this framework need. Application 
+		can override any of these config files and feed in updated path for them -->
+	<config-files>
+		<property name="validationRules"
+			value="/com/igate/web/app/security/config/validator-rules.xml" />
+		<property name="validation" value="/validation.xml" />
+		<property name="esapiResourceDir" value="/esapi/" />
+		<property name="csrfguard"
+			value="csrfguard.properties" />
+		<property name="InternalConfigFile"
+			value="/com/igate/web/app/security/config/isecurity-internal-config.xml"></property>
+		<property name="springContext"
+			value="/com/igate/web/app/security/config/spring-context.xml"></property>
+		<property name="applicationResources" value="applicationResources"></property>
+		
+		<property name="AccessControlPolicy" value="/fbac-policies/ESAPI-AccessControlPolicy.xml" />
+		<property name="URLAccessRules" value="/fbac-policies/URLAccessRules.txt" />
+		<!-- security jar logger -->
+		<property name="log4jResourceDir" value="/log4j.properties"></property>
+		
+	</config-files>
+
+	<module-list>
+		<!-- CoreValidation module performs size and content validation of core 
+			aspects of web request -->
+		<module type="CoreInputValidation" runModule="false">
+			<property name="requestSize" value="40000" />
+			<property name="noOfHeaders" value="50" />
+			<property name="noOfCookies" value="40000" />
+			<property name="headerSize" value="40000" />
+			<property name="cookieSize" value="40000" />
+			<property name="headerName" value="${Validator.HTTPHeaderName}" />
+			<!-- <property name="headerValue" value="${Validator.HTTPHeaderValue}" /> -->
+			<property name="queryString" value="${Validator.HTTPQueryString}" />
+			<property name="cookieContent" value="${Validator.HTTPCookieValue}" />
+			<property name="cookieName" value="${Validator.HTTPCookieName}" />
+			<property name="fileName" value="${Validator.FileName}" /> 
+			<property name="uploadExtensions" value="${HttpUtilities.ApprovedUploadExtensions}" />
+			<property name="maxUploadFileBytes" value="${HttpUtilities.MaxUploadFileBytes}" />
+			<property name="fieldsSize" value="950" />
+			<property name="fileSize" value="1024" />
+
+		</module>
+		<!-- CustomValidation module performs size (min, max length) and content 
+			(using regEx whitelist) validation of user supplied inputs / parameters -->
+		<module type="CustomInputValidation" runModule="false">
+			<forms>
+				
+			</forms>
+			<!-- can provide the name for Error map	 -->
+			<property name= "Errors" value="errorMap"></property>
+			<!-- If Redirect check is required, please provide your Regex pattern in value part 
+			In addition to this, you need to provide 'URLRedirectValidator' in validation.xml-->
+			<property name="Redirect" value="^\/wrapper/*.*$" />
+			<property name="parameterContent" value="${Validator.HTTPParameterValue}" />
+		</module>
+
+		<!-- XssInjectionProtection module performs black list validation and allows 
+			different encoding / decoding of user supplied input parameters -->
+		<module type="XssInjectionProtection" runModule="true">
+			<property name="performBlackListValOfCookies" value="true"></property>
+			<property name="performBlackListValOfHeaders" value="true"></property>
+			<property name="performBlackListValOfQueryString" value="true"></property>
+			<property name="performBlackListValOfUserParams" value="true"></property>
+			<!-- <property name="encodeUnknownUserParams" value="true"></property>
+			<property name="encodeKnownUserParams" value="true"></property>
+			<property name="DecodeKnownUserParams" value="true"></property> -->
+
+		</module>
+
+		<!-- CsrfGuard module provides CSRF (Cross Site Request Forgery) protection -->
+		<module type="CsrfGuard" runModule="true">
+			<!-- Specify form or URI patterns for which you want CSRF protection to 
+				be active -->
+			<forms>
+			
+		    	<form name="iconnect" uri="/iconnect/Login.jsp"></form>
+		    	<form name="iconnect" uri="/iconnect/ADMIN_ExcelUpload.jsp"></form>
+				<form name="iconnect" uri="/iconnect/BULLETINBOARD_Create.jsp"></form>
+				<form name="iconnect" uri="/iconnect/HELPDESK_AssetComponentDetail.jsp"></form>
+				<form name="iconnect" uri="/iconnect/HELPDESK_AssetInformation.jsp"></form>
+				<form name="iconnect" uri="/iconnect/HELPDESK_AssetParentDetail.jsp"></form>
+				<form name="iconnect" uri="/iconnect/HELPDESK_Create_ODC.jsp"></form>
+				<form name="iconnect" uri="/iconnect/HELPDESK_Create.jsp"></form>
+				<form name="iconnect" uri="/iconnect/HELPDESK_Edit_ODC.jsp"></form>
+				<form name="iconnect" uri="/iconnect/HELPDESK_Edit.jsp"></form>
+				<form name="iconnect" uri="/iconnect/HELPDESK_EngineerScoreDetail.jsp"></form>
+				<form name="iconnect" uri="/iconnect/HELPDESK_GroupMembersAvailability.jsp"></form>
+				<form name="iconnect" uri="/iconnect/MASTER_Edit_ODC.jsp"></form>
+				<form name="iconnect" uri="/iconnect/MASTER_Edit.jsp"></form>
+				<form name="iconnect" uri="/iconnect/Reports.jsp"></form>
+				<form name="iconnect" uri="/iconnect/searchHome.jsp"></form>
+				<form name="iconnect" uri="/iconnect/TECHCR_Create.jsp"></form>
+				<form name="iconnect" uri="/iconnect/TECHCR_Edit.jsp"></form>
+				<form name="iconnect" uri="/iconnect/TECHCR_NocAlerts.jsp"></form>
+				<form name="iconnect" uri="/iconnect/TECHCR_Rca.jsp"></form>
+				<form name="iconnect" uri="/iconnect/TECHCR_Risk.jsp"></form>
+				<form name="iconnect" uri="/iconnect/UNIVERSAL_ListPage.jsp"></form>
+				<form name="iconnect" uri="/iconnect/UNIVERSAL_ListPageHeader.jsp"></form>
+				<form name="iconnect" uri="/iconnect/UNIVERSAL_Search_Result.jsp"></form>
+				<form name="iconnect" uri="/iconnect/WORKSPACEAPPROVAL_ListPage.jsp"></form>
+				<form name="iconnect" uri="/iconnect/WORKSPACEMGMT_AuditLog.jsp"></form>
+				<form name="iconnect" uri="/iconnect/WORKSPACEPLANNING_Edit.jsp"></form>
+				<form name="iconnect" uri="/iconnect/WORKSPACEPLANNING_Error.jsp"></form>
+				<form name="iconnect" uri="/iconnect/WORKSPACEPLANNING_New.jsp"></form>
+				<form name="iconnect" uri="/iconnect/WORKSPACEPLANNING_SentForRework.jsp"></form>
+				<form name="iconnect" uri="/iconnect/WORKSPACEPLANNING_UpdateColumn.jsp"></form>
+				<form name="iconnect" uri="/iconnect/WORKSPACEREQUEST_ListPage.jsp"></form>
+				<form name="iconnect" uri="/iconnect/WorkspaceSentForRework_ListPage.jsp"></form>
+				<form name="iconnect" uri="/iconnect/BULLETINBOARD_Remove.jsp"></form>
+				<form name="iconnect" uri="/iconnect/MASTER_Create_ODC.jsp"></form>
+				<form name="iconnect" uri="/iconnect/WorkspaceSentForRework_ListPage.jsp"></form>
+				<form name="iconnect" uri="/iconnect/ADMIN_AddGroup.jsp"></form>
+				<form name="iconnect" uri="/iconnect/ADMIN_AddLocationDeptGrpList.jsp"></form>
+				<form name="iconnect" uri="/iconnect/ADMIN_AddLocationGrpList.jsp"></form>
+				<form name="iconnect" uri="/iconnect/ADMIN_CategoryDisplayConsole.jsp"></form>
+				<form name="iconnect" uri="/iconnect/ADMIN_ChangeGroup.jsp"></form>
+				<form name="iconnect" uri="/iconnect/ADMIN_CreateGroup.jsp"></form>
+				<form name="iconnect" uri="/iconnect/ADMIN_DataResetCache.jsp"></form>
+				<form name="iconnect" uri="/iconnect/ADMIN_EditGroup.jsp"></form>
+				<form name="iconnect" uri="/iconnect/ADMIN_EditGroupDetails.jsp"></form>
+				<form name="iconnect" uri="/iconnect/UNIVERSAL_Header.jsp"></form>
+				<form name="iconnect" uri="/iconnect/ADMIN_ModifyLocation.jsp"></form>
+				<form name="iconnect" uri="/iconnect/ADMIN_RoleManipulation.jsp"></form>
+				<form name="iconnect" uri="/iconnect/ADMIN_ViewCategoryList.jsp"></form>
+				<form name="iconnect" uri="/iconnect/ADMIN_WorkflowResetCache.jsp"></form>
+				<form name="iconnect" uri="/iconnect/ADMINCONSOLE_AddLocation.jsp"></form>
+				<form name="iconnect" uri="/iconnect/CONTACTUS_HelpDeskAndEscalation.jsp"></form>
+				<form name="iconnect" uri="/iconnect/excelMessage.jsp"></form>
+				<form name="iconnect" uri="/iconnect/HELPDESK_AssetAllDetail.jsp"></form>
+				<form name="iconnect" uri="/iconnect/HELPDESK_EmployeeProfile.jsp"></form>
+				<form name="iconnect" uri="/iconnect/HELPDESK_UpdateComments.jsp"></form>
+				<form name="iconnect" uri="/iconnect/MASTER_Create.jsp"></form>
+				<form name="iconnect" uri="/iconnect/searchResult.jsp"></form>
+				<form name="iconnect" uri="/iconnect/UNIVERSAL_Header_ODC.jsp"></form>
+				<form name="iconnect" uri="/iconnect/UNIVERSAL_Search.jsp"></form>
+				<form name="iconnect" uri="/iconnect/User.jsp"></form>
+		    	
+			</forms>
+		</module>
+
+		<!-- OutputDataSanitization module performs encoding of html response -->
+		<module type="OutputDataSanitization" runModule="true">
+			<property name="htmlEncodeResponse" value="true"></property>
+		</module>
+
+		<!-- Cryptography module allows encryption or decryption of User supplied 
+			params. In addition to this, you need to inlucde Crypto in validation xml 
+			for field you need -->
+		<module type="Cryptography" runModule="false">
+			<!-- <property name="encryptCookies" value="true"></property>
+			<property name="encryptHeaders" value="true"></property>
+			<property name="encryptQueryString" value="true"></property>
+			<property name="decryptCookies" value="true"></property>
+			<property name="decryptCookies" value="true"></property>
+			<property name="decryptQueryString" value="true"></property>
+			<property name="encryptUnknownUserParams" value="true"></property>
+			<property name="encryptKnownUserParams" value="true"></property>
+			<property name="decryptKnownUserParams" value="true"></property> -->
+		</module>
+		
+		<!-- SessionManagement -->
+		<module type="SessionManagement" runModule="true">
+			<forms>
+				<form name="iconnect" uri="/iconnect/Login.jsp"></form>
+			</forms>
+		</module>
+		
+	</module-list>
+
+</WebSecurityValidatorConfig>

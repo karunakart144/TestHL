@@ -1,0 +1,358 @@
+@charset "utf-8";
+/*Reser CSS  */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video
+	{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section
+	{
+	display: block;
+}
+
+body {
+	line-height: 1;
+}
+
+ol,ul {
+	list-style: none;
+}
+
+blockquote,q {
+	quotes: none;
+}
+
+blockquote:before,blockquote:after,q:before,q:after {
+	content: '';
+	content: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/*------------------css starts here -----------------------*/
+.main {
+	width: 100%;
+	margin: 0 auto;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	overflow: hidden;
+}
+
+a img {
+	border: none;
+	outline: none;
+}
+
+.clear {
+	clear: both;
+}
+
+.line {
+	border-bottom: 1px solid #666666 !important;
+}
+
+.header_bg {
+	height: 75px;
+	width: 100%;
+}
+
+.header_bg img,.bg-center img,.igate_logo img {
+	max-width: 100%;
+}
+
+.header_bg .logo {
+	float: left;
+	height: 58px;
+	width: 26%;
+}
+
+img,map {
+	border: 0;
+	outline: none;
+	margin: 0;
+	padding: 0;
+}
+
+.igate_logo {
+	float: right;
+	height: auto;
+	margin: 5px;
+	width: 13%;
+}
+
+.bg-center {
+	float: left;
+	margin-left: 40px;
+}
+
+/*---search div ---------*/
+.welcome_user {
+	color: #1B71AA;
+float: left;
+font-size: 12px;
+padding: 1px 1px 1px 1px;
+text-align: right;
+width: 22.5%;
+top: 6px;
+margin-right: 40px;
+}
+
+.show_detail {
+	margin-top: 10px;
+	display:none;
+}
+
+.show_detail a {
+	text-decoration: none;
+	background: #E3ECF1;
+	padding: 4px;
+	border: 1px solid #CCC;
+}
+
+.welcome_user a {
+	text-decoration: none;
+	color: #666;
+}
+
+.logout img {
+	vertical-align: middle;
+}
+
+.searchDiv {
+	background: url("../../images/custom/search-bar.png") no-repeat scroll 0 0 transparent;
+    padding: 10px;
+    position: absolute;
+    right: 158px;
+    top: 25px;
+    width: 404px;
+    z-index: 100;
+	 height: 40px;
+}
+
+.searchDiv input
+{
+	background: url("../../images/custom/search_input.png") no-repeat scroll 0 -1px transparent;
+    border: medium none;
+    float: left;
+    font-size: 11px;
+    padding: 7px 10px 10px;
+    width: 225px;
+    outline:0;
+    -webkit-appearance:none;
+}
+
+/*------------for stylish dropdown list ------*/
+.tzSelect { /*background:#FFF;*/
+	display: inline-block;
+	height: 25px;
+	min-width: 145px;
+	position: relative;
+}
+
+.tzSelect .selectBox {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+	text-align: center;
+	font-size: 11px;
+	color: #fff;
+	padding-top: 7px;
+	background: url('../../images/custom/12.png') no-repeat;
+	cursor: pointer;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	margin-top: -2px;
+}
+
+.tzSelect .dropDown {
+	position: absolute;
+	top: 27px;
+	left: 0;
+	width: 100%;
+	border: 1px solid #32333b;
+	border-width: 0 1px 1px;
+	list-style: none;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	-moz-box-shadow: 0 0 4px #111;
+	-webkit-box-shadow: 0 0 4px #111;
+	box-shadow: 0 0 4px #111;
+	margin: 0;
+	padding: 0;
+}
+
+.tzSelect li {
+	height: 40px;
+	cursor: pointer;
+	position: relative;
+	background: #FFF;
+}
+
+.tzSelect li:hover {
+	background-color: #f1f2f2;
+}
+
+.tzSelect li span {
+	font-family: Arial;
+	font-size: 11px;
+	left: 28px;
+	position: absolute;
+	top: 17px;
+	color: #000;
+}
+
+.tzSelect li i {
+	left: 0;
+	position: absolute;
+	top: 9px;
+}
+
+.tzSelect li img {
+	left: 0;
+	position: absolute;
+	top: 10px;
+}
+/*---------- dropdown list styles ends here --------*/
+.globe_bg img {
+	width: 100%;
+	position: absolute;
+	/*background:url('../../images/custom/Vector-Shape-World-Map.jpg') no-repeat;
+	width:1024px;
+	height:530px;*/
+}
+
+.globe_img { /*width:100%;*/
+	
+}
+
+.pointer {
+	left: 519px;
+	position: absolute;
+	top: 495px;
+}
+
+.pointer img {
+	vertical-align: text-bottom;
+}
+
+.tool-tip {
+	background: none repeat scroll 0 0 #F1F1F1;
+	border-radius: 4px 4px 4px 4px;
+	padding: 3px;
+	position: relative;
+	height: 160px;
+	width: 245px;
+}
+
+.heading-logo {
+	padding: 10px 5px;
+	background: url(../../images/custom/igate_logo_small.png) no-repeat
+		right top #E3ECF1;
+	box-shadow: 1px 1px 2px #ccc;
+}
+
+.tool-tip h4 {
+	font-size: 12px;
+	font-weight: bold;
+	color: #0D81BE;
+	margin-bottom: 5px;
+	word-wrap: break-word;
+	width: 70%;
+}
+
+.tool-tip .inner_content {
+	margin: 4px;
+}
+
+.tool-tip .inner_content img {
+	vertical-align: middle;
+	padding: 0 4px;
+}
+
+.tool-tip .inner_content p {
+	color: #666666;
+	line-height: 10px;
+	margin-bottom: 4px;
+}
+
+.tool-tip .inner_content p span {
+	float: left;
+	width: 35px;
+}
+
+.tool-tip a {
+	color: #0D81BE;
+}
+
+a.close_btn {
+	float: right;
+	left: -6px;
+	text-decoration: none;
+	font-weight: bold;
+	border: 1px solid #ddd;
+	padding: 3px;
+	position: relative;
+	top: -27px;
+	cursor: pointer;
+}
+
+a.close_btn:hover {
+	background: #ddd;
+}
+
+.arrow-down {
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-top: 10px solid #F1F1F1;
+	height: 0;
+	left: 122px;
+	position: relative;
+	width: 0;
+}
+
+img[usemap] {
+	border: none;
+	height: auto;
+	width: 100%;
+}
+
+.footer {
+	color: #000000;
+	font-size: 0.7em;
+	text-align: center;
+	background: #F6F6F6;
+	padding: 5px;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.pointer {
+	display: none;
+}
+
+#holder {
+	background: url("../../images/custom/VR_Global_Landing_1024X727.png") no-repeat;
+}
+
+.container {
+	width: 1024px;
+	/*width:100%;*/
+	top: 85px;
+	margin: 0 auto;
+}
+
+.main_content {
+	background: #064A7B;
+}

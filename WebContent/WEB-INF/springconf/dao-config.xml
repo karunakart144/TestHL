@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+						http://www.springframework.org/schema/tx
+					    http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+					    http://www.springframework.org/schema/aop
+					    http://www.springframework.org/schema/aop/spring-aop-4.1.xsd"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx">
+	<!--
+		DataSource Configuration For SQL SERVER 2008 DB. This will be the
+		default DB for the iConnect application
+	-->
+	<bean id="sqlDataSource" destroy-method="close"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="net.sourceforge.jtds.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:jtds:sqlserver:/10.51.104.21/JAVA_ICONNECT_LH_DEV" />
+		<property name="username" value="rbctest"/>
+		<property name="password" value="rbctest"/>
+		<property name="maxActive" value="100" />
+		<property name="maxIdle" value="5" />
+		<property name="minIdle" value="1" />
+		<property name="initialSize" value="5" />
+	</bean>
+
+<!-- 	<bean id="sqlDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>java:jboss/datasources/IConnectLHDB</value>
+		</property>
+	</bean>  -->
+	
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="sqlDataSource" />
+	</bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+	<bean id="loginDAOImpl" class="com.igate.iconnect.daoimpl.LoginDAOImpl"
+		scope="request">
+		<property name="dataSource" ref="sqlDataSource" />
+	</bean>
+	
+	<bean id="loginDAOImp" class="com.igate.iconnect.daoimpl.SESSION_ListenerDAOImpl"
+		scope="request">
+			<property name="dataSource" ref="sqlDataSource" />
+	</bean>
+	
+	<bean id="aiDAOImpl"
+		class="com.igate.ai.daoimpl.AIDAOImpl" scope="request">
+		<property name="dataSource" ref="sqlDataSource" />
+	</bean>
+</beans>

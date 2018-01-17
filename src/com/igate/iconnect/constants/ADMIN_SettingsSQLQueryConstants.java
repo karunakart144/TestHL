@@ -1,0 +1,450 @@
+/*
+ * Copyright (c) 2011.Information Systems(IGATE)
+ */
+
+package com.igate.iconnect.constants;
+
+public class ADMIN_SettingsSQLQueryConstants {
+
+    public static final String IC_IHD_TICKET_DETAILS_VERIFY_GROUP = "Select * from IC_IHD_TICKET_DETAILS "
+            + "where ASSIGNED_GROUP=? AND ASSIGNED_TO=? AND WORKFLOW_STATE NOT IN(Select STATE_ID from IC_WORKFLOW_STATE_MASTER" +
+            		" where NAME in ('Cancelled','Resolved/Closed','Closed(By System)','AutoClosed(By System)','Closed(By User)','Withdraw'))";
+    public static final String IC_IHD_UPDATE_MEMBER_INACTIVE = "UPDATE IC_IHD_GROUP_MEMBER_DETAILS SET "
+            + "IS_ACTIVE=?,MODIFIED_BY=?,MODIFIED_DATE=?"
+            + "WHERE MEMBER_ID=? AND GROUP_ID=?";
+    public static final String IC_IHD_ADD_GROUP_MEMBER_DETAILS = "IF EXISTS (SELECT * FROM IC_IHD_GROUP_MEMBER_DETAILS" +
+    		"  WHERE MEMBER_ID=? AND GROUP_ID=? AND IS_ACTIVE=?)" +
+    		"  UPDATE IC_IHD_GROUP_MEMBER_DETAILS SET IS_ACTIVE=?,MODIFIED_BY=?,MODIFIED_DATE=? ,ROLE_ID=?,ASSIGNMENT_REQUIRED=?" +
+    		"	WHERE MEMBER_ID=? AND GROUP_ID=? " +
+    		" ELSE INSERT INTO IC_IHD_GROUP_MEMBER_DETAILS(MEMBER_ID,GROUP_ID,WORK_LOAD," +
+    		" IS_ACTIVE,CREATED_BY,CREATED_DATE,ROLE_ID,ASSIGNMENT_REQUIRED)" +
+    		" VALUES(?,?,?,?,?,?,?,?)";
+    
+    public static final String SELECT_GROUP_FOR_ROLE="Select GMD.MEMBER_ID, URD.ROLE_ID from IC_IHD_GROUP_MASTER GM" +
+    	" JOIN IC_IHD_GROUP_MEMBER_DETAILS GMD ON GM.GROUP_ID = GMD.GROUP_ID" +
+    	" JOIN IC_USER_ROLE_DETAILS URD ON GMD.MEMBER_ID = URD.EMPLOYEE_ID" +
+    	" Where GM.IS_ACTIVE = 1 and GMD.IS_ACTIVE = 1 and URD.IS_ACTIVE = 1" +
+    	" AND GMD.ROLE_ID = 2 and GMD.MEMBER_ID = ? AND URD.ROLE_ID = ?";
+    
+    public static final String IC_IHD_UPDATE_GROUP_MEMBER_DETAILS="update IC_IHD_GROUP_MEMBER_DETAILS set ROLE_ID=?,MODIFIED_BY=?,MODIFIED_DATE=? where MEMBER_ID=? and GROUP_ID=? and IS_ACTIVE=?";
+    
+
+    public static final String IC_IHD_CHECK_GROUP_MEMBER = "SELECT * FROM IC_IHD_GROUP_MEMBER_DETAILS "
+            + "WHERE MEMBER_ID=? AND GROUP_ID=? AND IS_ACTIVE=?";
+    public static final String IC_IHD_UPDATE_ROLE_AS_INACTIVE = "UPDATE IC_USER_ROLE_DETAILS SET "
+            + "IS_ACTIVE=?,MODIFIED_BY=?,MODIFIED_DATE=? "
+            + "WHERE EMPLOYEE_ID=? AND ROLE_ID=?";
+
+    public static final String IC_IHD_ADD_ROLE_TO_GROUP_MEMBER = "IF EXISTS (SELECT 1 FROM IC_USER_ROLE_DETAILS "
+            + "WHERE EMPLOYEE_ID=? AND ROLE_ID=? AND IS_ACTIVE=?) "
+            + "UPDATE IC_USER_ROLE_DETAILS SET IS_ACTIVE=?,MODIFIED_BY=?,MODIFIED_DATE=? "
+            + "WHERE EMPLOYEE_ID=? AND ROLE_ID=? ELSE "
+            + "INSERT INTO IC_USER_ROLE_DETAILS(EMPLOYEE_ID,ROLE_ID,IS_ACTIVE,CREATED_BY,CREATED_DATE) "
+            + "VALUES(?,?,?,?,?)";
+    public static final String IC_IHD_CHECK_USER_ROLE_ACTIVE="SELECT COUNT(EMPLOYEE_ID) FROM IC_USER_ROLE_DETAILS WHERE EMPLOYEE_ID=? AND ROLE_ID=? AND IS_ACTIVE=1";
+    
+    
+    public static final String IC_IHD_CREATE_GROUP="INSERT INTO IC_IHD_GROUP_MASTER(GROUP_ID,NAME,MANAGER,LOCATION_ID," +
+    		"IS_ACTIVE,IS_AUTO_ASSIGNMENT_REQUIRED,CREATED_BY,CREATED_DATE) VALUES((SELECT MAX(GROUP_ID)+1 FROM IC_IHD_GROUP_MASTER),?,?,?,?,?,?,?)";
+	public static final String IC_IHD_GROUP_FUNCTION_MAPPING = "INSERT INTO IC_IHD_GROUP_FUNCTION_MAPPING(GROUP_ID," +
+			"CATEGORY_ID,LOCATION_ID,SLA_ID,IS_ACTIVE,CREATED_BY,CREATED_DATE) VALUES(?,?,?,?,?,?,?)";
+	public static final String IC_IHD_ADD_GROUP_MEMBER_DETAILS_INSERT = "INSERT INTO IC_IHD_GROUP_MEMBER_DETAILS(MEMBER_ID,GROUP_ID,ROLE_ID,ASSIGNMENT_REQUIRED," +
+			"IS_ACTIVE,CREATED_BY,CREATED_DATE) VALUES(?,?,?,?,?,?,?)";
+	
+    public static final String IC_IHD_GROUP_DETAIL_LIST_SQL = "select gm.GROUP_ID,gm.NAME 'GROUP_NAME',gm.MANAGER,usr.NAME+'('+gm.MANAGER+')' 'MANAGER_NAME_ID',"+//urd.ROLE_ID,rm.NAME 'ROLE_NAME'," +
+			"case when gm.IS_ACTIVE=1 then 'Active' else 'Inactive' end 'STATUS',gm.LOCATION_ID,loc.CITY 'LOCATION_NAME'," +
+			"case when gm.IS_AUTO_ASSIGNMENT_REQUIRED=1 then 'Yes' else 'No' end 'AUTO_ASSIGNMENT_REQUIRED' " +
+			"from IC_IHD_GROUP_MASTER gm " +
+			"join IC_IHD_GROUP_FUNCTION_MAPPING gfm on gfm.GROUP_ID=gm.GROUP_ID and gfm.LOCATION_ID=gm.LOCATION_ID " +
+			"join IC_LOCATION_MASTER loc on loc.LOCATION_ID=gm.LOCATION_ID " +
+			"join IC_USER_DETAILS usr on usr.EMPLOYEE_ID=gm.MANAGER "+
+			/*"join IC_USER_ROLE_DETAILS urd on urd.EMPLOYEE_ID=gm.MANAGER " +
+			"join IC_ROLE_MASTER rm on rm.ROLE_ID=urd.ROLE_ID and urd.ROLE_ID !=6 and " +
+			"rm.NAME like (case when gfm.CATEGORY_ID=1020 then '%Group Quality Manager%' else '%manager%' end) " +
+			"join IC_IHD_FUNCTION_ROLE_MAPPING frm on frm.ROLE_ID=urd.ROLE_ID " +
+			"join IC_WORKFLOW_MASTER wm on wm.WORKFLOW_ID=frm.FUNCTION_ID " +
+			"join IC_IHD_CATEGORY_MASTER cm on cm.NAME=wm.NAME and cm.CATEGORY_ID=gfm.CATEGORY_ID " +*/
+			"where gfm.CATEGORY_ID=? and gm.IS_ACTIVE=? order by gm.NAME";
+	   
+    public static final String IC_IHD_TICKET_DETAILS_OF_GROUP = "Select * from IC_IHD_TICKET_DETAILS " +
+    		"where ASSIGNED_GROUP=? AND WORKFLOW_STATE NOT IN(Select STATE_ID from IC_WORKFLOW_STATE_MASTER " +
+    		" where NAME in ('Cancelled','Resolved/Closed','Closed(By System)','AutoClosed(By System)','Closed(By User)','Withdraw'))";
+    /*
+     * public static final String IC_IHD_TICKET_DETAILS_VERIFY_GROUP =
+     * "Select HD.TICKET_ID,HD.REQUESTED_BY,GM.NAME as GROUP_NAME,UD.NAME " +
+     * "from IC_IHD_TICKET_DETAILS HD left outer join IC_IHD_GROUP_MASTER GM " +
+     * "on HD.ASSIGNED_GROUP=GM.GROUP_ID left outer join IC_USER_DETAILS UD " +
+     * "on HD.ASSIGNED_TO=UD.EMPLOYEE_ID where ASSIGNED_GROUP=? AND ASSIGNED_TO=? "
+     * + "AND WORKFLOW_STATE NOT IN(5,6,10,18,20,23,35)";
+     */
+	
+	public static final String INSERT_SLA_MASTER_ADMIN_CONSOLE_LOC_ADDN="INSERT INTO IC_IHD_SLA_MASTER(SLA_ID,DESCRIPTION,ORGANIZATION,TIME,IS_ACTIVE,CREATED_BY,CREATED_DATE)" +
+			" VALUES((SELECT MAX(SLA_ID)+1 FROM IC_IHD_SLA_MASTER) ,?,?,?,?,?,?)";
+	
+	public static final String SELECT_MAX_SLA_ID="Select MAX(SLA_ID) as SLA_ID FROM IC_IHD_SLA_MASTER";
+	
+	
+	public static final String INSERT_OPERATING_TIME_DETAILS="Insert Into IC_IHD_SLA_OPERATING_TIME_DETAILS(SLA_ID,DAY,START_TIME,END_TIME,NEXT_WORKING_DAY,IS_ACTIVE," +
+			"	CREATED_BY,CREATED_DATE)" +
+			"	values(?,?,?,?,?,?,?,?)";
+	
+	public static final String SELECT_LOCN_ID="SELECT LOCATION_ID FROM IC_LOCATION_MASTER WHERE CITY=? and COUNTRY=?";
+	
+	public static final String INSERT_SERVICE_WINDOW_DET_FOR_LOCN="INSERT INTO IC_IHD_SERVICE_WINDOW_DETAILS(LOCATION_ID,LOC_DET_ID,FUNCTION_ID,OPERATION_ID,IS_ACTIVE,CREATED_BY,CREATED_DATE)" +
+			"	VALUES(?,?,?,?,?,?,?)";
+	
+	
+	public static final String INSERT_LOCATION_DET_FOR_IT="Insert into IC_LOCATION_DETAILS(LOC_DET_ID,LOCATION_ID,BUILDING,FLOOR,IS_ACTIVE,CREATED_BY,CREATED_DATE) VALUES(?,?,?,?,?,?,?)";
+	
+	
+	public static final String SELECT_MAX_LOCNDET_ID="Select (MAX(LOC_DET_ID)+1) as LOC_DET_ID FROM IC_LOCATION_DETAILS";
+	
+	public static final String INSERT_APPROVER_EMP_DET_ADMIN_CONSOLE_FOR_LOCN="INSERT INTO IC_IHD_APPROVER_EMPLOYEE_DETAILS(APPROVER_ID,EMPLOYEE_ID,IS_ACTIVE,CREATED_BY,CREATED_DATE,LOCATION_ID)VALUES(?,?,?,?,?,?)";	
+	
+	public static final String INSERT_FUNCN_LOCATION_MAPPING="INSERT INTO IC_IHD_FUNCTION_LOCATION_MAPPING(FUNCTION_ID,LOCATION_ID,IS_ACTIVE,CREATED_BY,CREATED_DATE) VALUES(?,?,?,?,?)";
+	
+	public static final String INSERT_HOL_EXCLUSION_SLA_MAPPING="INSERT INTO IC_IHD_SLA_EXCLUSION_DATES(SLA_ID,LOCATION_ID,DATE,IS_ACTIVE,CREATED_BY,CREATED_DATE) VALUES(?,?,?,?,?,?)";
+	
+	public static final String INSERT_DEFAULT_ASSIGNMENT_GROUP_DETAIL="INSERT INTO IC_IHD_DEFAULT_ASSIGNMENT_DETAILS(CATEGORY_ID,LOCATION_ID,GROUP_ID,IS_ACTIVE,CREATED_BY,CREATED_DATE) VALUES(?,?,?,?,?,?)";
+	
+	public static final String INSERT_DEPT_DEFAULT_ASSIGNMENT_GROUP_DETAIL="INSERT INTO IC_IHD_DEPT_DEFAULT_ASSIGNMENT(DEPT_ID,CATEGORY_ID,LOCATION_ID,GROUP_ID,IS_ACTIVE,CREATED_BY,CREATED_DATE) VALUES(?,?,?,?,?,?,?)";
+	
+	public static final String SELECT_DEFAULT_ASSIGNMENT_GROUP_DETAIL="SELECT COUNT(CATEGORY_ID) FROM IC_IHD_DEFAULT_ASSIGNMENT_DETAILS where LOCATION_ID=?";
+	
+	public static final String SELECT_DEPT_DEFAULT_ASSIGNMENT_GROUP_DETAIL="SELECT COUNT(CATEGORY_ID) FROM IC_IHD_DEPT_DEFAULT_ASSIGNMENT where LOCATION_ID=?";
+	
+
+	public static final String SELECT_ADMINCONSOLE_APPROVER_EMPLOYEE_DETAILS="Select distinct approverEmp.EMPLOYEE_ID,iud.NAME as EMPLOYEE_NAME,(iud.NAME +'('+approverEmp.EMPLOYEE_ID+')' ) as EMPLOYEE,categoryApproval.APPROVER_ID as APPROVER_ID,approverMst.DESCRIPTION as APPROVER_NAME ,case when categoryApproval.IS_ACTIVE =1 then 'Active' else 'Inactive' end IS_ACTIVE," +
+			" case when categoryApproval.IS_ACTIVE =1 then 'Remove' else 'Add'  end 'ACTION'" +
+			"	from	IC_IHD_CATEGORY_APPROVAL_DETAILS categoryApproval ,	IC_USER_DETAILS iud," +
+			"	IC_IHD_APPROVER_EMPLOYEE_DETAILS approverEmp," +
+			"	IC_IHD_APPROVER_MASTER approverMst" +
+			"	where  iud.EMPLOYEE_ID=approverEmp.EMPLOYEE_ID" +
+			"	and approverMst.DESCRIPTION=?" +
+			"	and approverMst.APPROVER_ID=categoryApproval.APPROVER_ID" +
+			"	and iud.IS_ACTIVE=1 and categoryApproval.CATEGORY_ID=?" +
+			"	and approverEmp.IS_ACTIVE in (?) and categoryApproval.IS_ACTIVE=1" +
+			"	order by iud.NAME";
+	
+	public static final String SELECT_OPEN_TICKETS_FOR_CATEGORY="Select CATEGORY_ID  ,COUNT(TICKET_ID) as 'COUNT_TICKETS',(SELECT NAME FROM IC_IHD_CATEGORY_MASTER WHERE CATEGORY_ID =det.CATEGORY_ID) as CATEGORY_NAME,SUB_CATEGORY_ID,(SELECT NAME FROM IC_IHD_CATEGORY_MASTER WHERE CATEGORY_ID =det.SUB_CATEGORY_ID) as SUB_CATEGORY_NAME," +
+			"	(SELECT STUFF(" +
+			"			(" +
+			"			SELECT ',' + RTRIM(LTRIM(STR(P.TICKET_ID)))" +
+			"			FROM IC_IHD_TICKET_DETAILS P" +
+			"			where p.CATEGORY_ID=det.CATEGORY_ID" +
+			"			and p.SUB_CATEGORY_ID=det.SUB_CATEGORY_ID" +
+			"			and p.WORKFLOW_STATE" +
+			"			not IN" +
+			"			(Select STATE_ID FROM IC_WORKFLOW_STATE_MASTER where NAME  IN ('Cancelled','Resolved/Closed','Closed(By System)','Closed(By User)','Closed with Success','Closed with Rollback'," +
+			"			'AutoClosed(By System)','Closed with No Change','Withdraw')" +
+			"			and p.CATEGORY_ID=?" +
+			"		 )" +
+			"		ORDER BY P.TICKET_ID" +
+			"		FOR XML PATH('')),1,1,'')" +
+			"		) AS TICKET_ID" +
+			"	from IC_IHD_TICKET_DETAILS det,IC_WORKFLOW_STATE_MASTER st" +
+			"	Where  st.STATE_ID=det.WORKFLOW_STATE" +
+			"	and st.NAME not in ('Cancelled','Resolved/Closed','Closed(By System)','Closed(By User)','Closed with Success','Closed with Rollback'," +
+			"	'AutoClosed(By System)','Closed with No Change','Withdraw') and CATEGORY_ID =? GROUP BY CATEGORY_ID,SUB_CATEGORY_ID order by CATEGORY_ID";
+	
+	public static final String SELECT_OPEN_TICKETS_FOR_SUBCATEGORY="Select CATEGORY_ID ,COUNT(TICKET_ID) as 'COUNT_TICKETS' ,(SELECT NAME FROM IC_IHD_CATEGORY_MASTER WHERE CATEGORY_ID =det.CATEGORY_ID) as CATEGORY_NAME,SUB_CATEGORY_ID,(SELECT NAME FROM IC_IHD_CATEGORY_MASTER WHERE CATEGORY_ID =det.SUB_CATEGORY_ID) as SUB_CATEGORY_NAME," +
+	"	(SELECT STUFF(" +
+	"			(" +
+	"			SELECT ',' + RTRIM(LTRIM(STR(P.TICKET_ID)))" +
+	"			FROM IC_IHD_TICKET_DETAILS P" +
+	"			where p.CATEGORY_ID=det.CATEGORY_ID" +
+	"			and p.SUB_CATEGORY_ID=det.SUB_CATEGORY_ID" +
+	"			and p.WORKFLOW_STATE" +
+	"			not IN" +
+	"			(Select STATE_ID FROM IC_WORKFLOW_STATE_MASTER where NAME  IN ('Cancelled','Resolved/Closed','Closed(By System)','Closed(By User)','Closed with Success','Closed with Rollback'," +
+	"			'AutoClosed(By System)','Closed with No Change','Withdraw')" +
+	"			and p.SUB_CATEGORY_ID=?" +
+	"		 )" +
+	"		ORDER BY P.TICKET_ID" +
+	"		FOR XML PATH('')),1,1,'')" +
+	"		) AS TICKET_ID" +
+	"	from IC_IHD_TICKET_DETAILS det,IC_WORKFLOW_STATE_MASTER st" +
+	"	Where  st.STATE_ID=det.WORKFLOW_STATE" +
+	"	and st.NAME not in ('Cancelled','Resolved/Closed','Closed(By System)','Closed(By User)','Closed with Success','Closed with Rollback'," +
+	"	'AutoClosed(By System)','Closed with No Change','Withdraw') and SUB_CATEGORY_ID =? GROUP BY CATEGORY_ID,SUB_CATEGORY_ID  order by CATEGORY_ID";
+	
+	public static final String SELECT_COUNT_OF_TICKETS="Select COUNT(Ticket_id)  from IC_IHD_TICKET_DETAILS Where CATEGORY_ID=? and WORKFLOW_STATE " +
+			" not IN" +
+			" (Select STATE_ID FROM IC_WORKFLOW_STATE_MASTER where NAME  IN ('Cancelled','Resolved/Closed','Closed(By System)','Closed(By User)','Closed with Success','Closed with Rollback', 'AutoClosed(By System)','Closed with No Change','Withdraw'))";
+	
+	public static final String SELECT_COUNT_OF_TICKETS_SUBCAT="Select COUNT(Ticket_id)  from IC_IHD_TICKET_DETAILS Where SUB_CATEGORY_ID=? and WORKFLOW_STATE " +
+	" not IN" +
+	" (Select STATE_ID FROM IC_WORKFLOW_STATE_MASTER where NAME  IN ('Cancelled','Resolved/Closed','Closed(By System)','Closed(By User)','Closed with Success','Closed with Rollback', 'AutoClosed(By System)','Closed with No Change','Withdraw'))";
+	
+	public static final String UPDATE_CATEGORY_MASTER="UPDATE IC_IHD_CATEGORY_MASTER" +
+			"			SET NAME=?," +
+			"			RECOMMENDED_PRIORITY=?," +
+			"			IS_ACTIVE=?," +
+			"			MODIFIED_BY=?," +
+			"			MODIFIED_DATE=GETDATE()" +
+			"			WHERE CATEGORY_ID=?";
+	public static final String UPDATE_SUBCATEGORY_MASTER=" UPDATE IC_IHD_CATEGORY_MASTER			SET NAME=?," +
+			"			IS_CHANGE_REQUEST=?," +
+			"			IS_ACTIVE=?," +
+			"			RECOMMENDED_PRIORITY=?," +
+			"			LINK=case when ? like '' then NULL else ? end," +//L2: 2751
+			"			MODIFIED_BY=?," +
+			"			MODIFIED_DATE=GETDATE()" +
+			"			WHERE CATEGORY_ID=?";
+	
+	public static final String UPDATE_LOCATION_MASTER="UPDATE IC_LOCATION_MASTER " +
+			"SET CITY=?," +
+			"MODIFIED_BY=?," +
+			"MODIFIED_DATE=GETDATE() " +
+			"WHERE LOCATION_ID=?";
+	
+	public static final String UPDATE_LOCATION_DETAILS="UPDATE IC_LOCATION_DETAILS " +
+			"SET BUILDING=?," +
+			"FLOOR=?," +
+			"IS_ACTIVE=?," +
+			"MODIFIED_BY=?," +
+			"MODIFIED_DATE=GETDATE() " +
+			"WHERE LOCATION_ID=? AND LOC_DET_ID=?";
+	
+	public static final String SELECT_ACTIVE_SUBCATEGORY_COUNT="SELECT COUNT(*)'COUNT' FROM IC_IHD_CATEGORY_MASTER WHERE PARENT_ID=(SELECT PARENT_ID FROM IC_IHD_CATEGORY_MASTER WHERE CATEGORY_ID=?)";
+	
+	public static final String INACTIVATE_CATEGORY="UPDATE IC_IHD_CATEGORY_MASTER SET IS_ACTIVE=0,MODIFIED_BY=?,MODIFIED_DATE=GETDATE() WHERE CATEGORY_ID=(SELECT DISTINCT PARENT_ID FROM IC_IHD_CATEGORY_MASTER WHERE CATEGORY_ID=?)";
+	
+	public static final String SELECT_COUNT_APPROVER_ORDER_FOR_CATEGORY="SELECT COUNT(APPROVER_ORDER) from IC_IHD_CATEGORY_APPROVAL_DETAILS WHERE CATEGORY_ID=?";
+	
+	public static final String INSERT_CATEGORY_APPROVAL_DETAILS ="INSERT INTO IC_IHD_CATEGORY_APPROVAL_DETAILS (CATEGORY_ID,APPROVER_ORDER,APPROVER_ID,IS_ACTIVE,CREATED_BY,CREATED_DATE) VALUES(?,?,?,?,?,GETDATE())";
+	
+	public static final String SELECT_CATEGORY_OLD_DETAILS="SELECT   funcat.CATEGORY_ID as 'FUNCTION_ID', " +
+	"	funcat.NAME as 'FUNCTION_NAME', parentcat.CATEGORY_ID as 'CATEGORY_ID',	 parentcat.name as 'CATEGORY_NAME'," +
+	"	case when parentcat.IS_ACTIVE= 1 then 'Active'else 'Inactive' end 'CATEGORY_STATUS'," +
+	"	subcat.CATEGORY_ID as 'SUBCATEGORY_ID'," +
+	"	subcat.NAME as 'SUBCATEGORY_NAME',	" +
+	"	case when subcat.IS_ACTIVE= 1 then 'Active' else 'Inactive' end 'SUBCATEGORY_STATUS'," +
+	"   MAX(CASE WHEN catapp.APPROVER_ORDER = 1 THEN appr.DESCRIPTION  ELSE NULL END) AS 'APPROVER_LEVEL_1'," +
+	"	(SELECT IS_ACTIVE FROM IC_IHD_CATEGORY_APPROVAL_DETAILS WHERE CATEGORY_ID=subcat.CATEGORY_ID and APPROVER_ORDER = 1) AS 'APPROVER_LEVEL_STATUS_1' ," +
+	"   MAX(CASE WHEN catapp.APPROVER_ORDER = 2 THEN appr.DESCRIPTION  ELSE NULL END )AS 'APPROVER_LEVEL_2'," +
+	"	(SELECT IS_ACTIVE FROM IC_IHD_CATEGORY_APPROVAL_DETAILS WHERE CATEGORY_ID=subcat.CATEGORY_ID and APPROVER_ORDER = 2) AS 'APPROVER_LEVEL_STATUS_2' ," +
+	"   MAX(CASE WHEN catapp.APPROVER_ORDER = 3 THEN appr.DESCRIPTION  ELSE NULL END )AS 'APPROVER_LEVEL_3'," +
+	"	(SELECT IS_ACTIVE FROM IC_IHD_CATEGORY_APPROVAL_DETAILS WHERE CATEGORY_ID=subcat.CATEGORY_ID and APPROVER_ORDER = 3) AS 'APPROVER_LEVEL_STATUS_3' ," +
+	"   pm.description as 'RECOMMENDED_PRIORITY',case when subcat.IS_CHANGE_REQUEST =1 then 'Yes' else 'No' end  'IS_CHANGE_REQUEST'," +
+	"   subcat.LINK 'LINK'" +
+	"   FROM IC_IHD_CATEGORY_MASTER funcat	 left outer join  IC_IHD_CATEGORY_MASTER parentcat  on funcat.CATEGORY_ID=parentcat.PARENT_ID	" +
+	"   left outer join  IC_IHD_CATEGORY_MASTER subcat on parentcat.CATEGORY_ID=subcat.PARENT_ID	 left outer join IC_IHD_CATEGORY_APPROVAL_DETAILS Catapp  on  Catapp.CATEGORY_ID=subcat.CATEGORY_ID" +
+	"	left outer join IC_PRIORITY_MASTER PM on subcat.RECOMMENDED_PRIORITY=PM.PRIORITY_ID " +
+	"	left outer join IC_IHD_APPROVER_MASTER appr on appr.APPROVER_ID = catapp.APPROVER_ID" +
+	"   where " +			
+	"  	 parentcat.CATEGORY_ID=?" +
+	"   and subcat.CATEGORY_ID=?" +
+	"   Group by funcat.CATEGORY_ID, funcat.NAME,parentcat.name,parentcat.CATEGORY_ID,parentcat.IS_ACTIVE,subcat.NAME,subcat.CATEGORY_ID," +
+	"  subcat.IS_ACTIVE, pm.description ,subcat.IS_CHANGE_REQUEST,subcat.LINK  ";
+	
+	public static final String SELECT_LOCATION_OLD_DETAILS="SELECT locmaster.LOCATION_ID as LOCATION_ID,locdetail.LOC_DET_ID as LOCDETID,locmaster.CITY as CITY," +
+				"locdetail.BUILDING as BUILDING," +
+				"locdetail.FLOOR as FLOOR,case when locdetail.IS_ACTIVE=1 then 'Active' else 'Inactive' end as 'STATUS'" +
+				"from IC_LOCATION_DETAILS locdetail,IC_LOCATION_MASTER locmaster where " +
+				"locmaster.LOCATION_ID=locdetail.LOCATION_ID AND locmaster.LOCATION_ID=? and locdetail.LOC_DET_ID=?";
+	
+
+public static final String INSERT_AUDIT_DET_CATEGORY="INSERT INTO IC_AUDIT_DETAILS " +
+	"	(	REFERENCE_ID,MENU_ID,PREVIOUS_STATE,CURRENT_STATE,ACTION,DATA_CHANGE,CHANGED_BY,CHANGED_DATE," +
+	"	CREATED_BY,CREATED_DATE,MAIL_TRIGGERED)" +
+	"	VALUES(?,?,?,?,?,?,?,?,?,GETDATE(),'1')";
+
+
+public static final String SELECT_ROLE_DETAILS="SELECT DISTINCT RM.NAME,RM.ROLE_ID,CASE WHEN RD.IS_ACTIVE=1 THEN 'Active' " +
+		"ELSE 'Inactive' END AS 'Status',case when (select APPROVER_ID from IC_IHD_APPROVER_MASTER IAM " +
+		"WHERE RM.ROLE_ID=10 AND AED.APPROVER_ID=IAM.APPROVER_ID) is not null then LM.CITY " +
+		"else '-' END AS 'Location',case when (select IS_ACTIVE from IC_IHD_APPROVER_MASTER IAM  " +
+		"WHERE RM.ROLE_ID=10 AND AED.APPROVER_ID=IAM.APPROVER_ID) is not null then  CASE WHEN AED.IS_ACTIVE=1 " +
+		" THEN 'Active' else 'Inactive' END ELSE '-' END AS 'LocationStatus',case " +
+		"When (select APPROVER_ID from IC_IHD_APPROVER_MASTER IAM " +
+		"WHERE RM.ROLE_ID=10 AND AED.APPROVER_ID=IAM.APPROVER_ID) " +
+		"is not null then convert(VARCHAR,FLM.LOCATION_ID) else '-' END AS 'LocationId' " +
+		"FROM IC_USER_ROLE_DETAILS RD " +
+		"LEFT OUTER JOIN IC_ROLE_MASTER RM ON RM.ROLE_ID=RD.ROLE_ID " +
+		"LEFT OUTER JOIN IC_IHD_APPROVER_EMPLOYEE_DETAILS AED ON AED.EMPLOYEE_ID=RD.EMPLOYEE_ID " +
+		"LEFT OUTER JOIN IC_IHD_FUNCTION_LOCATION_MAPPING FLM ON " +
+		"FLM.LOCATION_ID=AED.LOCATION_ID and FLM.IS_ACTIVE = '1' " +
+		"LEFT OUTER JOIN IC_LOCATION_MASTER LM ON FLM.LOCATION_ID = LM.LOCATION_ID and LM.IS_ACTIVE = '1' " +
+		"WHERE RD.EMPLOYEE_ID=? ";
+
+public static final String UPDATE_ROLE_MANIPULATION="UPDATE IC_USER_ROLE_DETAILS SET IS_ACTIVE=?,MODIFIED_BY=?," +
+		"MODIFIED_DATE=? WHERE ROLE_ID=? AND EMPLOYEE_ID=?";
+
+public static final String UPDATE_ROLE_MANIPULATION_LOC="IF EXISTS (SELECT 1 FROM IC_IHD_APPROVER_EMPLOYEE_DETAILS " +
+		" WHERE EMPLOYEE_ID = ? AND APPROVER_ID=2 AND LOCATION_ID=?) UPDATE IC_IHD_APPROVER_EMPLOYEE_DETAILS SET IS_ACTIVE=?," +
+		"MODIFIED_BY=?,MODIFIED_DATE=? WHERE LOCATION_ID=? AND EMPLOYEE_ID=? AND APPROVER_ID=2";
+
+public static final String SELECT_ROLE_FOR_ADDITION="SELECT RM.ROLE_ID,RM.NAME FROM IC_ROLE_MASTER RM " +
+		" WHERE RM.ROLE_ID NOT IN(SELECT URD.ROLE_ID FROM IC_USER_ROLE_DETAILS URD " +
+		" WHERE URD.EMPLOYEE_ID=?) and RM.ROLE_ID NOT IN(12,13,14,15,16,17) order by NAME ";
+
+public static final String SELECT_IT_FUNHEAD_ROLE_LOC="SELECT ILM.LOCATION_ID,ILM.CITY FROM " +
+		"IC_IHD_FUNCTION_LOCATION_MAPPING FLM " +
+		"INNER JOIN IC_LOCATION_MASTER ILM ON ILM.LOCATION_ID=FLM.LOCATION_ID " +
+		"AND FLM.FUNCTION_ID=256 AND ILM.IS_ACTIVE=1 WHERE FLM.LOCATION_ID NOT " +
+		"IN(SELECT AED.LOCATION_ID FROM IC_IHD_APPROVER_EMPLOYEE_DETAILS AED " +
+		"WHERE AED.APPROVER_ID=2 AND EMPLOYEE_ID=?) AND FLM.IS_ACTIVE=1;";
+
+public static final String INSERT_USER_ROLE_DETAILS="IF NOT EXISTS (SELECT 1 FROM IC_USER_ROLE_DETAILS WHERE EMPLOYEE_ID = ? AND ROLE_ID=?)" +
+		" INSERT INTO IC_USER_ROLE_DETAILS(EMPLOYEE_ID" +
+		",ROLE_ID,IS_ACTIVE,CREATED_BY,CREATED_DATE) VALUES(?,?,?,?,?)";
+
+public static final String INSERT_IC_IHD_APPROVER_EMPLOYEE_DETAILS="INSERT INTO IC_IHD_APPROVER_EMPLOYEE_DETAILS" +
+		"(APPROVER_ID,EMPLOYEE_ID,IS_ACTIVE,CREATED_BY,CREATED_DATE,LOCATION_ID) VALUES(?,?,?,?,?,?)";
+
+public static final String IC_IHD_UPDATE_MEMBER_ROLE_STATUS = "UPDATE IC_IHD_GROUP_MEMBER_DETAILS SET "
+    + "ROLE_ID=?,IS_ACTIVE=?,MODIFIED_BY=?,MODIFIED_DATE=?"
+    + "WHERE MEMBER_ID=? AND GROUP_ID=?";
+
+public static final String IC_IHD_CATEGORY_MASTER_ALL_SUB_CATEGORY="UPDATE  IC_IHD_CATEGORY_MASTER set IS_ACTIVE=?,MODIFIED_BY=?,MODIFIED_DATE=GETDATE() "
+	+ "where PARENT_ID=? and IS_ACTIVE=1";
+
+public static final String IC_MAX_GROUP="SELECT MAX(GROUP_ID) FROM IC_IHD_GROUP_MASTER";
+
+public static final String IC_LOCATION_LIST="SELECT DISTINCT LOCATION_ID FROM IC_IHD_GROUP_FUNCTION_MAPPING WHERE IS_ACTIVE=1 AND CATEGORY_ID=?";
+
+public static final String IC_UPDATE_GROUP_MEMBER_DETAILS="UPDATE IC_IHD_GROUP_MEMBER_DETAILS SET IS_ACTIVE=?,MODIFIED_BY=?,MODIFIED_DATE=? where GROUP_ID=?";
+
+public static final String IC_UPDATE_GROUP_FUNCTION_MAPPING="UPDATE IC_IHD_GROUP_FUNCTION_MAPPING SET IS_ACTIVE=?,MODIFIED_BY=?,MODIFIED_DATE=? where GROUP_ID=?";
+
+public static final String IC_AUDIT_LOG_DETAILS="INSERT INTO IC_AUDIT_DETAILS(REFERENCE_ID,MENU_ID,ACTION,DATA_CHANGE,CHANGED_BY,CHANGED_DATE,CREATED_BY,CREATED_DATE,MAIL_TRIGGERED) values (?,?,?,?,?,?,?,?,?)";
+												
+public static final String IC_INSERT_LOCATION_MASTER="INSERT INTO IC_LOCATION_MASTER(LOCATION_ID,COUNTRY,CITY,TIMEZONE_ID,IS_ACTIVE,CREATED_BY,CREATED_DATE) values((SELECT MAX(LOCATION_ID) FROM IC_LOCATION_MASTER)+1,?,?,?,?,?,?)";
+
+public static final String IC_UPADTE_LOACTION_MASTER="UPDATE IC_LOCATION_MASTER SET CITY=?,MODIFIED_BY=?,MODIFIED_DATE=GETDATE() WHERE CITY like ?";
+
+public static final String UPADTE_IC_LOCATION_DETAILS="UPDATE IC_LOCATION_DETAILS SET BUILDING=?,FLOOR=?,IS_ACTIVE=?,MODIFIED_BY=?,MODIFIED_DATE=GETDATE() WHERE LOCATION_ID=? AND LOC_DET_ID=?";
+
+public static final String UPDATE_IC_IHD_CATEGORY_APPROVAL_DETAILS="UPDATE IC_IHD_CATEGORY_APPROVAL_DETAILS SET IS_ACTIVE=0, MODIFIED_BY=?,MODIFIED_DATE=GETDATE() WHERE CATEGORY_ID=?";
+
+public static final String UPDATE_IC_IHD_CATEGORY_DEPT_APPROVAL_DETAILS="UPDATE IC_IHD_CATEGORY_DEPT_APPROVAL_DETAILS SET IS_ACTIVE=0, MODIFIED_BY=?, MODIFIED_DATE=GETDATE() WHERE CATEGORY_ID=?";
+
+public static final String SELECT_IC_IHD_APPROVER_MASTER="SELECT APPROVER_ID FROM IC_IHD_APPROVER_MASTER WHERE DESCRIPTION=?";
+
+public static final String COUNT_FOR_APPROVAL_DETAILS="SELECT COUNT(APPROVER_ORDER) from IC_IHD_CATEGORY_APPROVAL_DETAILS WHERE CATEGORY_ID=? and APPROVER_ORDER=?";
+
+public static final String SELECT_IC_IHD_APPROVER_MASTER_ISACTIVE="SELECT APPROVER_ID FROM IC_IHD_APPROVER_MASTER WHERE IS_ACTIVE=1 and DESCRIPTION=?";
+
+public static final String UPDATE_IC_IHD_CATEGORY_APPROVAL_DETAILS_STATUS="UPDATE IC_IHD_CATEGORY_APPROVAL_DETAILS SET APPROVER_ORDER=?, APPROVER_ID=?,IS_ACTIVE=?,MODIFIED_BY=?,MODIFIED_DATE=GETDATE() WHERE  APPROVER_ORDER=? and CATEGORY_ID=?";
+
+public static final String INSERT_EXCEPTIONAL_FILEUPLOAD="INSERT INTO ic_ihd_Exception_FileUpload(Description, created_date, created_by) values (?,?,?)";
+
+public static final String INSERT_INTO_IC_USER_DETAILS="insert into IC_USER_DETAILS (EMPLOYEE_ID,NAME,EMAIL_ADDRESS,REPORTING_MANAGER,LOCATION_ID,USER_TIMEZONE,DU_ID,MOBILE_NUMBER,CONTACT_NUMBER,GENDER,ORGANIZATION,LOGIN_MODE,IS_ACTIVE,CREATED_BY,CREATED_DATE,GRADE) "
++ " values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,getdate(),'NA')";
+
+public static final String CHECK_USER_AVAILABILITY="select COUNT(*) from IC_USER_DETAILS where EMPLOYEE_ID=?";
+
+public static final String CHECK_DUID_AVAILABILITY="select COUNT(*) from IC_DU_MASTER where DU_ID=?";
+
+public static final String LH_PROJECT_DETAILS="SELECT LHP.PROJECT_ID,PM.NAME 'PROJECT_NAME',CASE WHEN IS_ACTIVE=1 THEN 'Active' else 'InActive' end 'IS_ACTIVE' FROM IC_LH_PROJECT_MASTER LHP "
++ " JOIN IC_PROJECT_MASTER PM ON PM.PROJECT_ID=LHP.PROJECT_ID "
++ " WHERE IS_ACTIVE=1";
+
+
+public static final String INSERT_INTO_IC_LH_PROJECT_MASTER="Declare @Proj VARCHAR(20) = ?, @loginId varchar(20)=? "
++ " IF EXISTS (select PROJECT_ID from IC_LH_PROJECT_MASTER where IS_ACTIVE = 0 and PROJECT_ID = @Proj) "
++ " BEGIN "
++ " update IC_LH_PROJECT_MASTER set IS_ACTIVE = 1,MODIFIED_BY = @loginId,MODIFIED_DATE = GETDATE() "
++ " where PROJECT_ID = @Proj " 
++ " END "
++ " ELSE " 
++ " BEGIN "
++ " insert into IC_LH_PROJECT_MASTER(PROJECT_ID,IS_ACTIVE,CREATED_BY,CREATED_DATE) "
++ " values(@Proj,1,@loginId,GETDATE()) "
++ " END";
+
+public static final String CHECK_LHPROJECT_AVAILABILITY="select COUNT(*) from IC_LH_PROJECT_MASTER where IS_ACTIVE = 1 and PROJECT_ID = ?";
+
+public static final String IC_USER_DETAILS_FOR_EDIT_USER_PROFILE="SELECT EMPLOYEE_ID,NAME 'EMPLOYEE_NAME',EMAIL_ADDRESS,REPORTING_MANAGER,LOCATION_ID,USER_TIMEZONE,DU_ID,MOBILE_NUMBER,CONTACT_NUMBER,GENDER,IS_ACTIVE FROM IC_USER_DETAILS WHERE EMPLOYEE_ID=?";
+
+public static final String UPDATE_IC_IHD_PROJECT_MASTER="update IC_LH_PROJECT_MASTER set IS_ACTIVE=?,MODIFIED_BY=?,MODIFIED_DATE=GETDATE() where PROJECT_ID=?";
+
+public static final String UPDATE_IC_USER_DETAILS="DECLARE @empId varchar(20)=?, "
++ " @empName varchar(100)=?, "
++ " @emailAdd varchar(100)=?, "
++ " @ro varchar(20)=?, "
++ " @loc smallint =?, "
++ " @timeZone tinyint=?, "
++ " @duId varchar(20)=?, "
++ " @mobnumber varchar(60)=?, "
++ " @extNo varchar(60)=?, "
++ " @gender char(1)=?, "
++ " @isActive bit=?, "
++ " @loginId varchar(20)=? "
++ " IF EXISTS (select 1 from IC_USER_DETAILS where EMPLOYEE_ID = @empId and NAME <> @empName) "
++ " BEGIN " 
++ " update IC_USER_DETAILS set NAME = @empName,MODIFIED_BY = @loginId,MODIFIED_DATE = GETDATE() "
++ " where EMPLOYEE_ID = @empId " 
++ " END "
++ " ELSE IF EXISTS (select 1 from IC_USER_DETAILS where EMPLOYEE_ID = @empId and EMAIL_ADDRESS <> @emailAdd) "
++ " BEGIN " 
++ " update IC_USER_DETAILS set EMAIL_ADDRESS = @emailAdd,MODIFIED_BY = @loginId,MODIFIED_DATE = GETDATE() "
++ " where EMPLOYEE_ID = @empId " 
++ " END "
++ " ELSE IF EXISTS (select 1 from IC_USER_DETAILS where EMPLOYEE_ID = @empId and REPORTING_MANAGER <> @ro) "
++ " BEGIN " 
++ " update IC_USER_DETAILS set REPORTING_MANAGER = @ro,MODIFIED_BY = @loginId,MODIFIED_DATE = GETDATE() "
++ " where EMPLOYEE_ID = @empId " 
++ " END "
++ " ELSE IF EXISTS (select 1 from IC_USER_DETAILS where EMPLOYEE_ID = @empId and LOCATION_ID <> @loc) "
++ " BEGIN " 
++ " update IC_USER_DETAILS set LOCATION_ID = @loc,MODIFIED_BY = @loginId,MODIFIED_DATE = GETDATE() "
++ " where EMPLOYEE_ID = @empId " 
++ " END "
++ " ELSE IF EXISTS (select 1 from IC_USER_DETAILS where EMPLOYEE_ID = @empId and USER_TIMEZONE <> @timeZone) "
++ " BEGIN " 
++ " update IC_USER_DETAILS set USER_TIMEZONE = @timeZone,MODIFIED_BY = @loginId,MODIFIED_DATE = GETDATE() "
++ " where EMPLOYEE_ID = @empId " 
++ " END "
++ " ELSE IF EXISTS (select 1 from IC_USER_DETAILS where  EMPLOYEE_ID = @empId and DU_ID <> @duId) "
++ " BEGIN " 
++ " update IC_USER_DETAILS set DU_ID = @duId,MODIFIED_BY = @loginId,MODIFIED_DATE = GETDATE() "
++ " where EMPLOYEE_ID = @empId " 
++ " END "
++ " ELSE IF EXISTS (select 1 from IC_USER_DETAILS where EMPLOYEE_ID = @empId and MOBILE_NUMBER <> @mobnumber) "
++ " BEGIN " 
++ " update IC_USER_DETAILS set MOBILE_NUMBER = @mobnumber,MODIFIED_BY =@loginId,MODIFIED_DATE = GETDATE() "
++ " where EMPLOYEE_ID = @empId " 
++ " END "
++ " ELSE IF EXISTS (select 1 from IC_USER_DETAILS where EMPLOYEE_ID = @empId and  CONTACT_NUMBER <> @extNo) "
++ " BEGIN " 
++ " update IC_USER_DETAILS set CONTACT_NUMBER = @extNo,MODIFIED_BY =@loginId,MODIFIED_DATE = GETDATE() "
++ " where EMPLOYEE_ID = @empId " 
++ " END "
++ " ELSE IF EXISTS (select 1 from IC_USER_DETAILS where EMPLOYEE_ID = @empId and GENDER <> @gender) "
++ " BEGIN " 
++ " update IC_USER_DETAILS set GENDER = @gender,MODIFIED_BY =@loginId,MODIFIED_DATE = GETDATE() "
++ " where EMPLOYEE_ID = @empId " 
++ " END "
++ " ELSE IF EXISTS (select 1 from IC_USER_DETAILS where EMPLOYEE_ID = @empId and  IS_ACTIVE <> @isActive) "
++ " BEGIN " 
++ " update IC_USER_DETAILS set IS_ACTIVE = @isActive,MODIFIED_BY =@loginId,MODIFIED_DATE = GETDATE() "
++ " where EMPLOYEE_ID = @empId " 
++ " END";
+
+public static final String VALIDATE_USER_DETAILS="DECLARE @empId varchar(20)=?, "
++ " @empName varchar(100)=?, "
++ " @emailAdd varchar(100)=?, "
++ " @ro varchar(20)=?, "
++ " @loc smallint =?, "
++ " @timeZone tinyint=?, "
++ " @duId varchar(20)=?, "
++ " @mobnumber varchar(60)=?, "
++ " @extNo varchar(60)=?, "
++ " @gender char(1)=?, "
++ " @isActive bit=? "
++ " select COUNT(EMPLOYEE_ID) from IC_USER_DETAILS where EMPLOYEE_ID = @empId and EMAIL_ADDRESS = @emailAdd and NAME = @empName and REPORTING_MANAGER = @ro "
++ " and @loc = LOCATION_ID and USER_TIMEZONE=@timeZone and DU_ID = @duId and MOBILE_NUMBER = @mobnumber and CONTACT_NUMBER = @extNo and GENDER = @gender and IS_ACTIVE = @isActive ";
+
+//L2: 2751
+public static final String IC_EMPLOYEE_DETAILS_FOR_ADMIN_CONSOLE_SQL = "select Distinct IU.EMPLOYEE_ID,IU.NAME,IU.EMAIL_ADDRESS,IU.GRADE as 'GRADE',IU.LOCATION_ID,IU.REPORTING_MANAGER "  
+		+ " as 'REPORTING_MANAGER_ID' ,isnull(IU1.NAME,'') as 'REPORTING_MANAGER_NAME',IU.ORGANIZATION as 'ORGANIZATION', "  
+		  + " IU1.ORGANIZATION as 'REPORTING_MANAGER_ORGANIZATION' "  
+		  + " from IC_USER_DETAILS IU left outer join IC_GRADE_MASTER GM on GM.GRADE = IU.GRADE "
+		  + " left outer JOIN  IC_USER_DETAILS IU1 on IU1.EMPLOYEE_ID=IU.REPORTING_MANAGER "   
+		  + " left outer JOIN IC_USER_ROLE_DETAILS urd on urd.EMPLOYEE_ID=IU.EMPLOYEE_ID and urd.IS_ACTIVE=1  "   
+		  + " where IU.EMPLOYEE_ID=? "
+		 + " AND IU.IS_ACTIVE=1 ";
+		;
+}

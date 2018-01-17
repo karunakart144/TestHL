@@ -1,0 +1,365 @@
+@charset "utf-8";
+/* CSS Document */
+html
+{
+	margin:0;
+	padding:0;
+}
+
+body
+{
+	width:100%;
+	margin:0;
+	padding:0;
+	font-family:Arial;
+	color:#000;
+	background:#fff;
+}
+.main {
+	width:100%;
+	margin:0 auto;
+	 border-top: 2px solid #41A3D0;
+}
+
+.logo
+{
+	margin: 100px auto 20px;
+	width:500px;
+	height:170px;
+}
+
+.logo img
+{
+	width:100%;
+	height:auto;
+}
+
+
+.clear
+{
+	clear:both;
+}
+
+
+/* other fixes jul08 2013 */
+/* other fixes */
+input {
+background:#fff !important;
+	border:1px solid #999  !important;
+}
+input[type='search']
+	{
+	background:#fff !important;
+	border:1px solid #999  !important;
+	margin:8px 0;
+	width:200px;
+	}
+	.select_search
+	{
+	width:150px;
+	}
+#headersearchfilterinput input
+{
+	background:#fff !important;
+	border:1px solid #999  !important;
+}
+/*--- Search bar ----*/
+.search_bar {
+	margin: 0 auto;
+	padding: 0 0 0 160px;
+    width: 585px;
+}
+
+fieldset {
+	border:none;
+	background:none;
+}
+.search_txt {
+	float:left;
+}
+/* input styles */
+
+.placeholder {
+	color: #bbb;
+}
+/* webkit placeholder */
+::-webkit-input-placeholder {
+ color: #bbb;
+}
+/* moz placeholder */
+:-moz-placeholder {
+ color: #777777;
+}
+/*----
+input[type=search]*/
+.search_bar input {
+  background: url("../../images/visualrep/search_input.png") no-repeat scroll 0 0 transparent;
+    border: medium none;
+    float: left;
+    font-size: 15px;
+    font-weight: normal;
+    padding: 10px 0 10px 10px;
+       width: 320px;
+	
+}
+.search_submit {
+
+    color: #FFFFFF;
+    display: inline;
+    font-size: 13px;
+    margin-left: -5px;
+    padding: 8px 90px 8px 5px;
+    position: relative;
+    text-decoration: none;
+    text-transform: uppercase;
+	
+}
+.search_submit select
+{
+	 
+    border: medium none;
+    font-size: 10px;
+    background: none repeat scroll 0 0 transparent;
+	color:#fff !important;
+}
+select option {
+  
+    color: #000 !important;
+}
+
+.search_submit a
+{
+	color:#fff;
+	text-decoration:none;
+	 position: relative;
+	 
+
+}
+
+
+
+
+/*==========*/
+.submit_btn {
+	float:right;
+	position:relative;
+	top:-37px;
+}
+.prev_search {
+	font-size:11px;
+	color:#999;
+    margin: 8px 0 5px 15px;
+}
+.prev_search a {
+	color:#4C9FAF;
+}
+/*---suggestions--*/
+#suggestions ul {
+	background: none repeat scroll 0 0 #FFFFFF;
+	border-bottom: 1px solid #CCCCCC;
+	border-left: 1px solid #CCCCCC;
+	border-right: 1px solid #CCCCCC;
+	box-shadow: 5px 10px 10px #888888;
+	color: #423E3E;
+	float: right;
+	font-size: 11px;
+	margin-right: 35px;
+	margin-top: 10px;
+	
+	padding: 10px 5px;
+	width: 170px;
+	word-wrap: break-word;
+}
+.ui-autocomplete
+{
+
+max-height: 170px;
+max-width:170px;
+overflow: auto;
+
+}
+.searchDiv
+{
+height:270px;
+
+}
+
+#suggestions a
+{
+	cursor:pointer;
+	color:#777;
+}
+#suggestions ul
+{
+list-style:none;
+}
+
+#suggestions p
+{
+margin:0 0 5px 0;
+}
+#suggestions li {
+    border-bottom: 1px solid #CCCCCC;
+    clear: both;
+    color: #777777;
+    line-height: 15px;
+    margin-bottom: 5px;
+    padding: 5px 0;
+    word-wrap: break-word;
+}
+
+#suggestions li:hover {
+background:#dddddd;
+cursor:pointer;
+}
+
+
+#suggestions .disp_blk_left {
+	float: left;
+	 width: 170px;
+}
+.disp_blk_left .user_img {
+	width:30px;
+	height:30px;
+	float:left;
+}
+#suggestions .disp_blk_right {
+	width: 150px;
+	float:left;
+}
+.border {
+	padding-bottom:5px;
+	border-bottom:1px solid #ccc;
+}
+#searchresults {
+	padding:5px;
+	line-height:15px;
+	clear:both;
+	color:#777;
+	cursor:pointer;
+}
+#searchresults:hover {
+	background:#eeecec;
+}
+.user_name {
+	float: left;
+	width: 110px;
+	  /* padding-left: 10px;*/
+}
+/*------------*/
+/* fixes jul08 */
+.build_left {
+	float:left;
+	margin-right:10px;
+	vertical-align:middle;
+}
+
+
+/*------------for stylish dropdown list ------*/
+.tzSelect {
+	/*background:#FFF;*/
+	display: inline-block;
+	height: 25px;
+	min-width: 145px;
+	position: relative;
+}
+.tzSelect .selectBox {
+  background: url("../../images/visualrep/12.png") no-repeat scroll 0 0 transparent;
+    border-radius: 3px 3px 3px 3px;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    height: 40px;
+    margin-top: -2px;
+    padding: 12px 0 0;
+    position: absolute;
+    text-align: center;
+    width: 180px;
+}
+.tzSelect .dropDown {
+	position:absolute;
+	top:37px;
+	left:0;
+	width: 120%;
+	border:1px solid #32333b;
+	border-width:0 1px 1px;
+	list-style:none;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	box-sizing:border-box;
+	-moz-box-shadow:0 0 4px #111;
+	-webkit-box-shadow:0 0 4px #111;
+	box-shadow:0 0 4px #111;
+	margin:0;
+	padding:0;
+}
+.tzSelect li {
+	height:40px;
+	cursor:pointer;
+	position:relative;
+	background:#FFF;
+}
+.tzSelect li:hover {
+	background-color:#f1f2f2;
+}
+.tzSelect li span {
+	font-family: Arial;
+	font-size: 11px;
+	left: 28px;
+	position: absolute;
+	top: 17px;
+	color:#000;
+}
+.tzSelect li i {
+	left: 0;
+	position: absolute;
+	top: 9px;
+}
+.tzSelect li img {
+    left: 0;
+    position: absolute;
+    top: 14px;
+    width: 20px;
+}
+form
+{
+	margin:0;
+	padding:0;
+}
+/*---------- dropdown list styles ends here --------*/
+
+.mobile {
+	background: url("../../images/visualrep/mobile-icon.png") no-repeat scroll 0 0 transparent;
+	padding-left: 12px;
+}
+.extn {
+	background: url("../../images/visualrep/phone-icon.png") no-repeat scroll 0 0 transparent;
+	padding-left: 15px;
+}
+.mail {
+	background: url("../../images/visualrep/mail-icon.png") no-repeat scroll 0 0 transparent;
+	padding-left: 15px;
+}
+.office {
+	background: url("../../images/visualrep/office-icon.png") no-repeat scroll 0 0 transparent;
+	padding-left: 15px;
+}
+/* input styles */
+
+.placeholder {
+                color: #bbb;
+}
+/* webkit placeholder */
+::-webkit-input-placeholder {
+color: #bbb;
+}
+/* moz placeholder */
+:-moz-placeholder {
+color: #777777;
+}
+/*----
+#headersearchfilterinput,#search-cubicle
+{
+width:170px;
+}

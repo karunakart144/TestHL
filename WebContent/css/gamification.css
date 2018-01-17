@@ -1,0 +1,161 @@
+
+.score{
+				/* background-image:url('../images/gamificationImage.png');*/
+                background-repeat:no-repeat;
+				width:32px;
+                height:21px;
+                font-size:13px;
+                margin-top:-1px;
+                margin-right:32px;
+                padding-left:38px;
+                position:absolute;
+                padding-top:5px;
+                z-index:99999;
+                vertical-align:middle!important;
+                }
+  /* Backup */              
+.score-txt_backUP{
+background: -moz-linear-gradient(left,  rgba(255,255,255,1) 0%, rgba(255,255,255,0.74) 72%, rgba(255,255,255,0.25) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,1)), color-stop(72%,rgba(255,255,255,0.74)), color-stop(100%,rgba(255,255,255,0.25))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(left,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.74) 72%,rgba(255,255,255,0.25) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(left,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.74) 72%,rgba(255,255,255,0.25) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(left,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.74) 72%,rgba(255,255,255,0.25) 100%); /* IE10+ */
+background: linear-gradient(to right,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.74) 72%,rgba(255,255,255,0.25) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#40ffffff',GradientType=1 ); /* IE6-9 */
+width:200px;
+height:21px;
+position:relative;
+font-size:13px;
+margin-left:37px;
+padding-left:10px!important;
+margin-top:-1px;
+padding-top:3px;
+ }
+ 
+ 
+.score-txt{
+	height:21px;
+	position:relative;
+	font-size:13px;
+	padding-left:10px!important;
+	padding-top:3px !important;
+	background-color: #fff;
+	padding-right: 6px !important;
+	padding-top: 3px !important;
+	margin-top: -4px !important;
+	margin-left: 40px;
+	border: 1px solid #00a1e4;
+	color: #666;
+	border-radius: 0px 5px 5px 0px;
+
+	}
+ 
+ .heading img
+{
+ vertical-align: middle;
+ margin-top: -5px;
+ }
+ .heading
+ {
+  color: #00a1e4;
+text-transform: uppercase;
+margin: 5px 0;
+ }
+ .leaderboard
+ {
+  width:94%;
+  border:1px solid #ccc;
+  border-radius:15px;
+  float:left;
+  padding:10px;
+ }
+ .other
+ {
+  width:30%;
+  float:left;
+ }
+ .user-scores li
+ {
+
+  list-style:none;
+ 
+  border:1px solid #ccc;
+  border-radius:10px;
+margin:10px;
+   background:#f2f2f2;
+ }
+ .user-name
+ {
+  font-size: 20px;
+font-weight: bold;
+color: #333;  
+margin: 2px;
+ }
+ .shield
+ {
+  background:url(../images/shield.png) no-repeat 50% 50% transparent;
+font-size: 20px;
+background-size: 100%;
+padding: 5px 10px 10px;
+font-weight: bold;
+color: #1f477d;
+ }
+ .user-details
+ {
+  float:left;
+  width:85%;
+   background:#f2f2f2;
+ 
+ }
+  .user-details p
+  {
+   padding: 0 5px;
+
+  }
+ .points
+ {
+  float:left;
+  width:15%;
+color:#00a1e4;
+  text-align:center;
+
+ }
+ .clear
+ {
+  clear:both;
+ }
+ .point
+ {
+  font-size:35px;
+  display:block;
+  
+ }
+ .points p
+ {
+  border:1px solid #ccc;
+   border-radius:8px;
+   background:#fff;
+   margin: 0;
+padding: 5px;
+ }
+ 
+ .mousechange:hover {
+        cursor:pointer;
+    }
+
+.award_bg{
+	  background:url(../images/Award2.png) no-repeat;
+	  width:56px;
+	  height:48px;
+	  line-height: 49px;
+	  margin-top: -13px;
+	  text-align: center;
+	    font-weight: bold;
+font-size: 12px;
+font-family: arial;
+	}
+
+#scoreGame{
+	color:#000 !important;
+}
+
